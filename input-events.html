@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allow Only Alphabets</title>
+</head>
+
+<body style="text-align: center;">
+    <p>Enter words with space :</p>
+    <input type="text" id="inputBox" placeholder="Enter alphabets with space" />
+    <p id="errorBox" style="color:rgb(247, 1, 1);"></p>
+
+    <br>
+    <p>Enter only words :</p>
+    <input type="text" id="inputBox2" placeholder="Enter alphabets only" />
+    <p id="errorBox2" style="color:rgb(247, 1, 1);"></p>
+    <br>
+    <p>Enter positive numbers :</p>
+    <input type="text" id="inputBox3" placeholder="Enter numbers only" />
+    <p id="errorBox3" style="color:rgb(247, 1, 1);"></p>
+    <br>
+    <p>Enter Alphanumerics :</p>
+    <input type="text" id="inputBox4" placeholder="Enter Alphanumerics only" />
+    <p id="errorBox4" style="color:rgb(247, 1, 1);"></p>
+    <br>
+
+    <script>
+        const inputBox = document.getElementById('inputBox');
+        const errorBox = document.getElementById('errorBox');
+
+        const inputBox2 = document.getElementById('inputBox2');
+        const errorBox2 = document.getElementById('errorBox2');
+
+        const inputBox3 = document.getElementById('inputBox3');
+        const errorBox3 = document.getElementById('errorBox3');
+
+        const inputBox4 = document.getElementById('inputBox4');
+        const errorBox4 = document.getElementById('errorBox4');
+
+        let flag = 0;
+        let str = "";
+        let last = "";
+        // let spaceContinuous = 0;
+        inputBox.addEventListener('keydown', (e) => {
+            const eve = e.keyCode;
+
+
+            if (e.key === 'Backspace' && last !== 32) {
+
+                str = str.slice(0, str.length - 1);
+            }
+
+
+
+            if (str.length >= 20) {
+                e.preventDefault();
+                errorBox.textContent = 'Only 20 char are allowed';
+                return;
+            }
+
+
+            if (str.length === 0 && e.keyCode === 32) {
+                e.preventDefault();
+                errorBox.textContent = 'No space at the beginning!';
+                return;
+            }
+            if (last === 32 && eve === 32) {
+                e.preventDefault();
+                errorBox.textContent = 'No continuous space!';
+                return;
+            }
+
+            if (!((eve >= 65 && eve <= 90) || (eve >= 97 && eve <= 122)) && e.key !== 'Backspace' && e.keyCode !== 32) {
+                e.preventDefault();
+                errorBox.textContent = 'Only alphabets are allowed!';
+            }
+
+            if ((((eve >= 65 && eve <= 90) || (eve >= 97 && eve <= 122))) || (!(str[str.length - 1] === " ") && e.keyCode === 32)) {
+
+                let empt = 0;
+                if (str === "")
+                    empt = 1;
+                str += e.key;
+
+                if (empt === 1) {
+                    inputBox.addEventListener('input', () => {
+                        const value = inputBox.value;
+                        inputBox.value = value.charAt(0).toUpperCase() + value.slice(1);
+                    });
+                }
+
+                if (last === 32) {
+                    console.log(last);
+                    inputBox.addEventListener('input', () => {
+                        let value = inputBox.value;
+                        value = value
+                            .split(' ')
+                            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                            .join(' ');
+
+                        inputBox.value = value;
+                    });
+                }
+
+            }
+            console.log(str);
+
+            last = e.keyCode;
+
+
+        });
+
+
+        inputBox2.addEventListener("keydown", (e) => {
+            const eve = e.keyCode;
+
+            if (!((eve >= 65 && eve <= 90) || (eve >= 97 && eve <= 122)) && e.key !== 'Backspace') {
+                e.preventDefault();
+                errorBox2.textContent = 'Only alphabets are allowed';
+            }
+
+        })
+
+        let dot = 0;
+        let dotAfter = 0;
+        let last3 = '';
+        let removeD = 0;
+        inputBox3.addEventListener('keydown', (e) => {
+            const eve = e.keyCode;
+
+            // inputBox3.addEventListener('input', () => {
+            //             const value = inputBox3.value;
+            //             if(e.key === 'Backspace' && value[value.length-1] === '.'){
+            //                 dot = 0;
+            //                 last3 = '';
+            //                 return;
+            //             }
+            //         });
+
+            if (last3 === '.' && e.key === 'Backspace') {
+                dot = 0;
+            }
+            if (e.key === 'Backspace' && dotAfter === 0 && removeD !== 0) {
+                dot = 0;
+                removeD = 0;
+            }
+            if (e.key === 'Backspace' && dotAfter <= 2 && dotAfter > 0) {
+                removeD++;
+                dotAfter--;
+            }
+
+            // if(dotAfter === 0 && e.key === 'Backspace' && )
+
+            if (e.key === '.' && dot === 1) {
+                e.preventDefault();
+                errorBox3.textContent = 'Only 1 . is allowed';
+            }
+
+            if (dot === 1 && ((eve >= 48) && (eve <= 57)) && dotAfter >= 2) {
+                e.preventDefault();
+                errorBox3.textContent = 'Only 2 decimals are allowed';
+            }
+
+            if (dot === 1 && ((eve >= 48) && (eve <= 57)) && dotAfter < 2) {
+                dotAfter++;
+            }
+
+            if (!((eve >= 48) && (eve <= 57)) && (e.key !== '.') && (e.key !== 'Backspace')) {
+                e.preventDefault();
+                errorBox3.textContent = 'Only numbers are allowed';
+            }
+
+            if (e.key === '.' && dot === 0)
+                dot = 1;
+
+            last3 = e.key;
+        })
+
+
+        inputBox4.addEventListener("keydown", (e) => {
+            const eve = e.keyCode;
+
+            if (!((eve >= 65 && eve <= 90) || (eve >= 97 && eve <= 122)) && !((eve >= 48) && (eve <= 57)) && (e.key !== '.') && e.key !== 'Backspace') {
+                e.preventDefault();
+                errorBox4.textContent = 'Only alphanumerics are allowed';
+            }
+
+        })
+
+
+
+    </script>
+</body>
+
+</html>

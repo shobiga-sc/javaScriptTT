@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let companyDetails = [
+            ["Trustrace", "India", "09:00 AM", "06:00 PM"],
+            ["Trustrace", "Sweden", "08:00 AM", "05:00 PM"],
+            ["Zomato", "US", "10:00 AM", "07:00 PM"],
+            ["Amazon", "UK", "08:00 AM", "06:00 PM"],
+            ["Google", "UK", "09:00 AM", "05:30 PM"],
+            ["Apple", "USA", "09:00 AM", "06:00 PM"],
+            ["Microsoft", "Canada", "08:30 AM", "05:30 PM"],
+            ["Netflix", "Brazil", "09:00 AM", "08:00 PM"],
+            ["Facebook", "Australia", "09:00 AM", "06:00 PM"],
+            ["Tesla", "Germany", "08:00 AM", "05:00 PM"]
+        ];
+
+
+        function getTimeZoneForCountry(country) {
+            const timeZones = {
+                "India": "Asia/Kolkata",
+                "Sweden": "Europe/Stockholm",
+                "US": "America/New_York",
+                "UK": "Europe/London",
+                "Brazil": "America/Sao_Paulo",
+                "Australia": "Australia/Sydney",
+                "Germany": "Europe/Berlin",
+                "Canada": "America/Toronto",
+                "USA": "America/Los_Angeles"
+            };
+
+            return timeZones[country] || null;
+        }
+
+
+        function getTimeInTimeZone(localTime, timeZone) {
+            const options = { timeZone: timeZone, hour: '2-digit', minute: '2-digit', hour12: true };
+            const formatter = new Intl.DateTimeFormat('en-US', options);
+            return formatter.format(new Date(localTime));
+        }
+
+
+        function isInWorkingHours(currentTime, openingTime, closingTime) {
+
+            currentTime = convertTo24HourFormat(currentTime);
+            openingTime = convertTo24HourFormat(openingTime);
+            closingTime = convertTo24HourFormat(closingTime);
+
+            return currentTime >= openingTime && currentTime <= closingTime;
+        }
+
+
+        function convertTo24HourFormat(time) {
+            let [hour, minute, period] = time.split(/[: ]/);
+            hour = parseInt(hour);
+            minute = parseInt(minute);
+
+            if (period.toLowerCase() === 'pm' && hour < 12) hour += 12;
+            if (period.toLowerCase() === 'am' && hour === 12) hour = 0;
+
+            return hour * 100 + minute;
+        }
+
+
+        function isCompanyOpen(companyName, localTime) {
+
+            let company = companyDetails.find(c => c[0].toLowerCase() === companyName.toLowerCase());
+
+            if (!company) {
+                console.log("Company not found");
+                return;
+            }
+
+            let country = company[1];
+            let openingTime = company[2];
+            let closingTime = company[3];
+            let timeZone = getTimeZoneForCountry(country);
+
+            if (!timeZone) {
+                console.log(`Time zone not found for country: ${country}`);
+                return;
+            }
+
+
+            let localTimeInCompanyTZ = getTimeInTimeZone(localTime, timeZone);
+
+
+            if (isInWorkingHours(localTimeInCompanyTZ, openingTime, closingTime)) {
+                console.log(`${companyName} in ${country} is open.`);
+            } else {
+                console.log(`${companyName} in ${country} is closed.`);
+            }
+        }
+
+
+        let currentLocalTime = new Date().toISOString();
+        isCompanyOpen("Amazon", currentLocalTime);
+        isCompanyOpen("Trustrace", currentLocalTime);
+        isCompanyOpen("Netflix", currentLocalTime);
+        isCompanyOpen("flix", currentLocalTime);
+
+
+    </script>
+</body>
+
+</html>

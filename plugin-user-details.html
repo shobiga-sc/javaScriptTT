@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Form to JSON & HTML</title>
+    <style>
+        .form-container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 3px solid #3144f1;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #dd4343;
+        }
+
+        button {
+            background: blue;
+            color: white;
+            cursor: pointer;
+        }
+
+        .output-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const formContainer = document.createElement("div");
+            formContainer.classList.add("form-container");
+
+            const formTitle = document.createElement("h2");
+            formTitle.textContent = "Enter Your Personal Info";
+            formContainer.appendChild(formTitle);
+
+            const form = document.createElement("form");
+            form.id = "personal-info-form";
+
+            const fields = [
+                { id: "firstName", placeholder: "First Name", type: "text" },
+                { id: "lastName", placeholder: "Last Name", type: "text" },
+                { id: "email", placeholder: "Email", type: "email" },
+                { id: "mobile", placeholder: "Mobile Number", type: "tel" },
+                { id: "country", placeholder: "Country", type: "text" }
+            ];
+
+            for (let i = 0; i < fields.length; i += 2) {
+                const row = document.createElement("div");
+                row.classList.add("form-row");
+                for (let j = 0; j < 2 && i + j < fields.length; j++) {
+                    const input = document.createElement("input");
+                    input.type = fields[i + j].type;
+                    input.id = fields[i + j].id;
+                    input.placeholder = fields[i + j].placeholder;
+                    input.required = true;
+                    row.appendChild(input);
+                }
+                form.appendChild(row);
+            }
+
+            const serviceRow = document.createElement("div");
+            serviceRow.classList.add("form-row");
+            const serviceSelect = document.createElement("select");
+            serviceSelect.id = "service";
+            serviceSelect.required = true;
+            const serviceOptions = [
+                { value: "", text: "Select a Service" },
+                { value: "service1", text: "Service 1" },
+                { value: "service2", text: "Service 2" }
+            ];
+            serviceOptions.forEach(opt => {
+                const option = document.createElement("option");
+                option.value = opt.value;
+                option.textContent = opt.text;
+                serviceSelect.appendChild(option);
+            });
+            serviceRow.appendChild(serviceSelect);
+            form.appendChild(serviceRow);
+
+            const submitButton = document.createElement("button");
+            submitButton.type = "submit";
+            submitButton.textContent = "Submit";
+            form.appendChild(submitButton);
+
+            formContainer.appendChild(form);
+            document.body.appendChild(formContainer);
+
+            const outputContainer = document.createElement("div");
+            outputContainer.classList.add("output-container");
+            outputContainer.innerHTML = `
+                <h2>JSON Output:</h2>
+                <pre id="json-output"></pre>
+                <h2>HTML Output:</h2>
+                <div id="html-output"></div>
+            `;
+            document.body.appendChild(outputContainer);
+
+            form.addEventListener("submit", function (event) {
+                event.preventDefault();
+                let formData = {
+                    firstName: document.getElementById("firstName").value,
+                    lastName: document.getElementById("lastName").value,
+                    email: document.getElementById("email").value,
+                    mobile: document.getElementById("mobile").value,
+                    address: { country: document.getElementById("country").value },
+                    service: document.getElementById("service").value
+                };
+                document.getElementById("json-output").textContent = JSON.stringify(formData, null, 4);
+                displayArrayAsHTML("#html-output", formData);
+            });
+        });
+
+        function createHTML(data) {
+            if (typeof data === "object" && data !== null) {
+                const wrapper = document.createElement("div");
+                wrapper.classList.add("item-container");
+                if (Array.isArray(data)) {
+                    data.forEach(item => wrapper.appendChild(createHTML(item)));
+                } else {
+                    for (const key in data) {
+                        const itemDiv = document.createElement("div");
+                        itemDiv.classList.add("nested-item");
+                        if (typeof data[key] === "object" && data[key] !== null) {
+                            itemDiv.innerHTML = `<strong>${key}:</strong>`;
+                            itemDiv.appendChild(createHTML(data[key]));
+                        } else {
+                            itemDiv.innerHTML = `<strong>${key}:</strong> ${data[key]}`;
+                        }
+                        wrapper.appendChild(itemDiv);
+                    }
+                }
+                return wrapper;
+            } else {
+                const itemDiv = document.createElement("div");
+                itemDiv.classList.add("primitive-item");
+                itemDiv.innerHTML = data;
+                return itemDiv;
+            }
+        }
+
+        function displayArrayAsHTML(selector, dataArray) {
+            const container = document.querySelector(selector);
+            if (!container) return;
+            container.innerHTML = "";
+            container.appendChild(createHTML(dataArray));
+        }
+    </script>
+</body>
+
+</html>

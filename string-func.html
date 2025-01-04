@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let st = "Hello World! How are you?";
+        let str1 = "Hello";
+        let str2 = " World";
+
+        //indexOf(searchValue): Returns the index of the first occurrence of a specified value.
+        //         indexOf(searchValue(char), fromIndex(int))
+        // Required: searchValue (The string to locate)
+        // Optional: fromIndex (The index to start the search; defaults to 0)
+
+        console.log("indexOf() - ", st.indexOf("o"));
+        function indexOf( char, str1){
+        flag = 0;
+        for (let i = 0; i < str1.length; i++) {
+            if (str1[i] === char) {
+                console.log(i);
+                flag = 1;
+                break;
+            }
+        }
+        if (flag == 0) console.log(-1);}
+
+        indexOf("o", st);
+
+
+        //lastIndexOf(searchValue): Returns the index of the last occurrence of a specified value.
+        //         lastIndexOf(searchValue(char), fromIndex(int))
+        // Required: searchValue (The string to locate)
+        // Optional: fromIndex (The index to start searching backward from; defaults to the string's length)
+        console.log("lastIndexOf() - ", st.lastIndexOf("o"));
+        function lastIndexOf( char, str1){
+        flag = 0;
+        for (let i = str1.length-1; i >=0; i--) {
+            if (str1[i] === "o") {
+                console.log(i);
+                flag = 1;
+                break;
+            }
+        }
+        if (flag == 0) console.log(-1);}
+        lastIndexOf("o", st);
+
+
+        //slice(startIndex, endIndex): Extracts a part of the string and returns it as a new string.
+        //         slice(start(int), end(int))
+        // Required: start (The index to begin the extraction)
+        // Optional: end (The index to end the extraction; defaults to the string's length)
+
+        console.log("slice() - ", st.slice(9, 10));
+
+        function slice(startInd, endInd, str1){
+        str3 = "";
+        for (let i = startInd; i < endInd && i < str1.length; i++) {
+            str3 += str1[i];
+        }
+        console.log(str3);}
+        slice(9, 9, st);
+
+
+        //split(separator): Splits the string into an array of substrings based on a separator.
+        //         split(separator(char), limit(int))
+        // Required: separator (The pattern or string to split by; can be undefined to return the entire string)
+        // Optional: limit (The maximum number of splits to include in the result)
+
+        console.log("split() - ", st.split(" "));
+        console.log("split() - ", st.split(" ", 4));
+        // str3 = [];
+        // let j = 0;
+        // for (let i = 0; i < st.length; i++) {
+        //     if (st[i] == " ") {
+        //         str3.push(st.substring(j, i));
+        //         j = i + 1;
+        //     }
+
+        // }
+        // str3.push(st.substring(j, st.length));
+        // console.log(str3);
+
+
+        // function customSplit(str, delimiter, limit) {
+        //     let result = [];
+        //     let current = "";
+
+        //     for (let i = 0; i < str.length; i++) {
+        //         if (str[i] === delimiter) {
+        //             result.push(current);
+        //             current = "";
+
+        //             if (result.length === limit) {
+        //                 return result;
+        //             }
+        //         } else {
+        //             current += str[i];
+        //         }
+        //     }
+        //     if (current !== "") {
+        //         result.push(current);
+        //     }
+
+        //     return result;
+        // }
+        // let str5 = "This is a test";
+        // console.log("Custom split() -", customSplit(str5, " ", 2));
+
+
+
+        //toLowerCase(): Converts the entire string to lowercase.
+        console.log("toLowerCase() - ", str1.toLowerCase());
+
+        // let str3 = "Hello World!";
+        // let result = '';
+        // for (let i = 0; i < str3.length; i++) {
+        //     let charCode = str3.charCodeAt(i);
+
+        //     if (charCode >= 65 && charCode <= 90) {
+        //         result += String.fromCharCode(charCode + 32);
+        //     } else {
+        //         result += str3[i];
+        //     }
+        // }
+        // console.log(result);
+
+
+
+        //toUpperCase(): Converts the entire string to uppercase.
+        console.log("toUpperCase() - ", str1.toUpperCase());
+
+        // let str3 = "Hello World!";
+        // let result = '';
+        // for (let i = 0; i < str3.length; i++) {
+        //     let charCode = str3.charCodeAt(i);
+
+        //     if (charCode >= 90 && charCode <= 122) {
+        //         result += String.fromCharCode(charCode - 32);
+        //     } else {
+        //         result += str3[i];
+        //     }
+        // }
+        // console.log(result);
+
+
+
+        //trim(): Removes whitespace from both ends of a string.
+        console.log("trim() - ", st.trim());
+
+        // let str3 = " Hello World  ";
+        // let start = 0;
+        // let end = str3.length - 1;
+        // while (start <= end && str3[start] === ' ') {
+        //     start++;
+        // }
+        // while (end >= start && str3[end] === ' ') {
+        //     end--;
+        // }
+        // console.log(str3.slice(start, end + 1));
+
+
+
+        //repeat(count): Returns a new string with a specified number of repetitions.
+        //         repeat(count(int))
+        // Required: count (The number of times to repeat the string)
+        // Optional: None
+
+        let str = "abcdef";
+        console.log("repeat() - ", str.repeat(0));
+        // function repeat(str,repeats){
+        // let str3 = str;
+        // for (let i = 1; i < repeats; i++) {
+        //     str3 += str;
+        // }
+        // console.log(str3);}
+
+        // repeat(str,3);
+
+
+
+
+        //charAt(index(int)): Returns the character at a specified index.
+        console.log("charAt() - ", str1.charAt(1));   //str1[1]
+
+
+
+
+        //concat(): Joins two or more strings.
+        //Required: At least one string to concatenate
+        // Optional: Additional strings to concatenate
+        console.log("concat() - ", str1.concat(str2)); //str1+str2
+        console.log("concat() - ", str1.concat(str2, { }, " ", "How are you?"));   //str1+str2,"! How are you?"
+
+
+        function createObject() {
+            let obj = {
+                name: "Temporary Object"
+            };
+            console.log("Object created:", obj.name);
+        }
+
+        console.log("Before creating object...");
+        createObject();
+        //console.log(obj.name);
+        console.log("After creating object. The object is now eligible for garbage collection.");
+
+
+        const arr1 = [1, 2, 3, 4];
+        const arr2 = [5, 6, 7, 8];
+
+        const arr3 = [];
+
+        for (let i = 0; i < arr1.length; i++) {
+            arr3.push(arr1[i])
+        }
+
+        for (let i = 0; i < arr2.length; i++) {
+            arr3.push(arr2[i])
+        }
+
+        console.log(arr3);
+
+        const arr4 = [...arr1, "hi", ...arr2];
+
+        console.log(arr4);
+
+        const arr5 = [arr1, "hi", arr2];
+
+        console.log(arr5);
+
+        const user = {
+            first_name: 'John',
+            'last-name': 'Doe',
+            'a g @e': 19
+        };
+
+        const address = {
+            address_1: "1, strret1",
+            address_2: "2, strret2",
+        }
+
+        const userWithAddress = {
+            ...user,
+            address: {
+                ...address
+            }
+        }
+
+        console.log(userWithAddress);
+
+
+        console.log(user);
+        console.log(user.first_name);
+        console.log(user['first_name']);
+        console.log(user.last - name);
+        console.log(undefined - undefined, user.john, name, window);
+        console.log(user['last-name']);
+
+
+    </script>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum corrupti nam ex in nesciunt asperiores neque
+        suscipit adipisci, eveniet cum expedita dolore, excepturi nihil ipsum quis a quisquam quasi voluptatum.</p>
+</body>
+
+</html>
