@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Form Validation</title>
+    <style>
+        .form-container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 3px solid #3144f1;
+            background-color: #f4f7fc;
+            border-radius: 8px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #dd4343;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #3144f1;
+        }
+
+        button {
+            background-color: #3144f1;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            margin-top: 15px;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .success-message {
+            color: green;
+            font-size: 16px;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        body {
+            background-image: url('https://c4.wallpaperflare.com/wallpaper/488/1001/297/line-light-background-bright-wallpaper-preview.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .form-container h2 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const formContainer = document.createElement("div");
+            formContainer.classList.add("form-container");
+
+            const formTitle = document.createElement("h2");
+            formTitle.textContent = "Enter Your Personal Info";
+            formContainer.appendChild(formTitle);
+
+            const form = document.createElement("form");
+            form.id = "personal-info-form";
+            form.setAttribute("novalidate", "");
+
+            const fields = [
+                { id: "firstName", label: "First Name", type: "text" },
+                { id: "lastName", label: "Last Name", type: "text" },
+                { id: "email", label: "Email", type: "text" },
+                { id: "mobile", label: "Mobile Number", type: "tel" },
+                { id: "country", label: "Country", type: "text" },
+                { id: "state", label: "State", type: "text" }
+            ];
+
+            for (let i = 0; i < fields.length; i += 2) {
+                const row = document.createElement("div");
+                row.classList.add("form-row");
+
+                for (let j = 0; j < 2 && i + j < fields.length; j++) {
+                    const group = document.createElement("div");
+                    group.classList.add("form-group");
+
+                    const label = document.createElement("label");
+                    label.setAttribute("for", fields[i + j].id);
+                    label.textContent = fields[i + j].label;
+
+                    const input = document.createElement("input");
+                    input.type = fields[i + j].type;
+                    input.id = fields[i + j].id;
+
+                    group.appendChild(label);
+                    group.appendChild(input);
+                    row.appendChild(group);
+                }
+                form.appendChild(row);
+            }
+
+            const serviceRow = document.createElement("div");
+            serviceRow.classList.add("form-row");
+            const serviceGroup = document.createElement("div");
+            serviceGroup.classList.add("form-group");
+
+            const serviceLabel = document.createElement("label");
+            serviceLabel.setAttribute("for", "service");
+            serviceLabel.textContent = "Select a Service";
+
+            const serviceSelect = document.createElement("select");
+            serviceSelect.id = "service";
+            const serviceOptions = [
+                { value: "", text: "Select a Service" },
+                { value: "service1", text: "Service 1" },
+                { value: "service2", text: "Service 2" }
+            ];
+            serviceOptions.forEach(opt => {
+                const option = document.createElement("option");
+                option.value = opt.value;
+                option.textContent = opt.text;
+                serviceSelect.appendChild(option);
+            });
+
+            serviceGroup.appendChild(serviceLabel);
+            serviceGroup.appendChild(serviceSelect);
+            serviceRow.appendChild(serviceGroup);
+            form.appendChild(serviceRow);
+
+            const otpRow = document.createElement("div");
+            otpRow.classList.add("form-row");
+            const otpGroup = document.createElement("div");
+            otpGroup.classList.add("form-group");
+
+            const otpLabel = document.createElement("label");
+            otpLabel.setAttribute("for", "otp");
+            otpLabel.textContent = "Enter OTP";
+
+            const otpInput = document.createElement("input");
+            otpInput.type = "text";
+            otpInput.id = "otp";
+
+            otpGroup.appendChild(otpLabel);
+            otpGroup.appendChild(otpInput);
+            otpRow.appendChild(otpGroup);
+            form.appendChild(otpRow);
+
+            const submitButton = document.createElement("button");
+            submitButton.type = "submit";
+            submitButton.textContent = "Submit";
+            form.appendChild(submitButton);
+
+            formContainer.appendChild(form);
+            document.body.appendChild(formContainer);
+
+            const successMessageContainer = document.createElement("div");
+            successMessageContainer.classList.add("success-message");
+            formContainer.appendChild(successMessageContainer);
+
+            form.addEventListener("submit", function (event) {
+                event.preventDefault();
+                let isValid = true;
+
+                let formData = {};
+                document.querySelectorAll("input, select").forEach(field => {
+                    formData[field.id] = field.value.trim();
+                });
+
+                document.querySelectorAll(".error").forEach(e => e.remove());
+
+                function showError(id, message) {
+                    const errorDiv = document.createElement("div");
+                    errorDiv.classList.add("error");
+                    errorDiv.textContent = message;
+                    document.getElementById(id).parentElement.appendChild(errorDiv);
+                }
+
+                function removeError(id) {
+                    const errorDiv = document.querySelector(`#${id} + .error`);
+                    if (errorDiv) {
+                        errorDiv.remove();
+                    }
+                }
+
+                function validateAlphaSpace(value) {
+                    for (let i = 0; i < value.length; i++) {
+                        const char = value.charAt(i);
+                        if (!((char >= 'A' && char <= 'Z') || (char >= 'a' && char <= 'z') || char === ' ')) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+
+                if (!formData.firstName) {
+                    showError("firstName", "First Name is required.");
+                    isValid = false;
+                } else if (!validateAlphaSpace(formData.firstName)) {
+                    showError("firstName", "First Name must contain only alphabets and spaces.");
+                    isValid = false;
+                } else {
+                    removeError("firstName");
+                }
+
+                if (formData.email.indexOf("@") === -1 || formData.email.indexOf(".") === -1) {
+                    showError("email", "Enter a valid email address.");
+                    isValid = false;
+                } else {
+                    removeError("email");
+                }
+
+                if (formData.mobile.length !== 10 || isNaN(formData.mobile)) {
+                    showError("mobile", "Enter a valid 10-digit mobile number.");
+                    isValid = false;
+                } else {
+                    removeError("mobile");
+                }
+
+                if (formData.otp.length !== 6 || isNaN(formData.otp)) {
+                    showError("otp", "OTP should be a 6-digit number.");
+                    isValid = false;
+                } else {
+                    removeError("otp");
+                }
+
+                if (!formData.service) {
+                    showError("service", "Please select a service.");
+                    isValid = false;
+                } else {
+                    removeError("service");
+                }
+
+                if (!formData.country) {
+                    showError("country", "Country is required.");
+                    isValid = false;
+                } else if (formData.country && !validateAlphaSpace(formData.country)) {
+                    showError("country", "Country must contain only alphabets and spaces.");
+                    isValid = false;
+                } else {
+                    removeError("country");
+                }
+
+                if (!formData.state) {
+                    showError("state", "State is required.");
+                    isValid = false;
+                } else if (formData.state && !validateAlphaSpace(formData.state)) {
+                    showError("state", "State must contain only alphabets and spaces.");
+                    isValid = false;
+                } else {
+                    removeError("state");
+                }
+
+                if (!isValid) return;
+
+
+                successMessageContainer.textContent = "Form submitted successfully!";
+                successMessageContainer.style.color = "green";
+                successMessageContainer.style.fontSize= "35px";
+
+
+                form.reset();
+            });
+
+            document.querySelectorAll("input, select").forEach(input => {
+                input.addEventListener("input", () => {
+                    removeError(input.id);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

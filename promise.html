@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let promise = new Promise((resolve, reject) => {
+            fetch('https://jsonplaceholder.typicode.com/todos/1')
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => { resolve(data); })
+                .catch(error => { reject(error); });
+
+        });
+
+        let promise4 = new Promise((resolve, reject) => {
+            fetch('https://jsonplaceholder.typicode.com/todos/1')
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => { resolve(data); })
+                .catch(error => { reject(error); });
+
+        });
+
+        promise
+            .then(data => { console.log("Data received: ", data) })
+            .catch(error => { console.error("Error Occured: ", error) })
+            .finally(() => { console.log("Code ended"); });
+
+
+        Promise.all([promise, promise4])
+            .then((results) => {
+                console.log(results);
+            })
+            .catch(error => { console.error(error); });
+
+        const promise1 = new Promise((resolve) => setTimeout(() => resolve("First task done"), 1000));
+        const promise2 = new Promise((resolve, reject) => setTimeout(() => reject("Second task done"), 1500));
+        const promise3 = new Promise((resolve, reject) => setTimeout(() => resolve("Third task done"), 500));
+
+        Promise.allSettled([promise1, promise2, promise3])
+            .then((results) => {
+                console.log(results);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+
+        async function fetchFunction() {
+            try {
+                const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+                //  if(!response.ok){
+                //     throw new Error("Error thrown", error)
+                //  }
+                const data = await response.json();
+                console.log("data is: ", data);
+
+            }
+            catch {
+                console.error("Error thrown", error);
+            }
+        }
+
+
+        function fetchFunction2(){
+            fetch('https://jsonplaceholder.typicode.com/todos/1')
+            .then(response => response.json())
+            .then(data => console.log("data received :", data))
+            .catch(error => console.error(error));
+        };
+
+
+        fetchFunction();
+        fetchFunction2();
+
+        fetch('https://jsonplaceholder.typicod.com/todos/1')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Data:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+
+            
+
+
+
+
+    </script>
+</body>
+
+</html>

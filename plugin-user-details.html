@@ -11,6 +11,7 @@
             margin: auto;
             padding: 20px;
             border: 3px solid #3144f1;
+         
         }
 
         .form-row {
@@ -36,6 +37,23 @@
         .output-container {
             margin-top: 20px;
         }
+
+        body {
+            background-image: url('https://c4.wallpaperflare.com/wallpaper/488/1001/297/line-light-background-bright-wallpaper-preview.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+           text-align: center;
+           padding: 20px;
+        }
+
+      h2{
+        text-align: center;
+      }
+
+     
+
+        
     </style>
 </head>
 
@@ -57,7 +75,8 @@
                 { id: "lastName", placeholder: "Last Name", type: "text" },
                 { id: "email", placeholder: "Email", type: "email" },
                 { id: "mobile", placeholder: "Mobile Number", type: "tel" },
-                { id: "country", placeholder: "Country", type: "text" }
+                { id: "country", placeholder: "Country", type: "text" },
+                { id: "state", placeholder: "State", type: "text" }
             ];
 
             for (let i = 0; i < fields.length; i += 2) {

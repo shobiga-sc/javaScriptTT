@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        if (!Array.prototype.includes) {
+            Array.prototype.includes = function (element) {
+                return this.indexOf(element) !== -1;
+            };
+        }
+
+
+       
+
+
+        if (!Array.prototype.customMap) {
+            Array.prototype.customMap = function (callback) {
+                let newArray = [];
+
+
+                for (let i = 0; i < this.length; i++) {
+                    newArray.push(callback(this[i], i, this));
+                }
+
+                return newArray;
+            };
+        }
+
+
+        const names = ["shobi", "malar", "varsh"];
+
+        const uppercasedNames = names.customMap(name => name.toUpperCase());
+
+        console.log(uppercasedNames);
+
+
+
+        if (!Array.prototype.customMergeSorted) {
+            Array.prototype.customMergeSorted = function (arr2) {
+
+                let mergedArray = this.concat(arr2);
+
+
+                mergedArray.sort((a, b) => a - b);
+
+                return mergedArray;
+            };
+        }
+
+
+        const array1 = [5, 2, 8];
+        const array2 = [3, 1, 4];
+
+        const sortedMergedArray = array1.customMergeSorted(array2);
+
+        console.log(sortedMergedArray);
+
+
+
+
+
+        if (!Array.prototype.intersection) {
+            Array.prototype.intersection = function (arr2) {
+                let result = [];
+
+
+                for (let i = 0; i < this.length; i++) {
+
+                    if (arr2.includes(this[i]) && !result.includes(this[i])) {
+                        result.push(this[i]);
+                    }
+                }
+
+                return result;
+            };
+        }
+
+
+        const array3 = [1, 2, 3, 4, 4, 5];
+        const array4 = [3, 4, 5, 6, 7, 4];
+
+        const intersection = array3.intersection(array4);
+
+        console.log(intersection);
+
+        if (!String.prototype.reverse) {
+            String.prototype.reverse = function () {
+                return this.split('').reverse().join('');
+            };
+        }
+
+
+        console.log("Malayalam".reverse());
+        console.log("JavaScript".reverse());
+
+
+
+
+    </script>
+</body>
+
+</html>

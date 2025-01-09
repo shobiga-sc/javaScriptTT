@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Allow Only Alphabets</title>
+    <style>
+        
+    </style>
 </head>
 
 <body style="text-align: center;">
@@ -27,6 +30,14 @@
     <br>
 
     <script>
+        const noPaste = document.querySelectorAll('input[type="text"]');
+
+        noPaste.forEach(element => {
+            element.addEventListener("paste", (event) => {
+                event.preventDefault();
+            });
+        });
+
         const inputBox = document.getElementById('inputBox');
         const errorBox = document.getElementById('errorBox');
 
@@ -47,10 +58,12 @@
             const eve = e.keyCode;
 
 
+
             if (e.key === 'Backspace' && last !== 32) {
 
                 str = str.slice(0, str.length - 1);
             }
+
 
 
 
@@ -59,6 +72,9 @@
                 errorBox.textContent = 'Only 20 char are allowed';
                 return;
             }
+            else {
+                errorBox.textContent = '';
+            }
 
 
             if (str.length === 0 && e.keyCode === 32) {
@@ -66,15 +82,25 @@
                 errorBox.textContent = 'No space at the beginning!';
                 return;
             }
+            else {
+                errorBox.textContent = '';
+            }
+
             if (last === 32 && eve === 32) {
                 e.preventDefault();
                 errorBox.textContent = 'No continuous space!';
                 return;
             }
+            else {
+                errorBox.textContent = '';
+            }
 
             if (!((eve >= 65 && eve <= 90) || (eve >= 97 && eve <= 122)) && e.key !== 'Backspace' && e.keyCode !== 32) {
                 e.preventDefault();
                 errorBox.textContent = 'Only alphabets are allowed!';
+            }
+            else {
+                errorBox.textContent = '';
             }
 
             if ((((eve >= 65 && eve <= 90) || (eve >= 97 && eve <= 122))) || (!(str[str.length - 1] === " ") && e.keyCode === 32)) {
@@ -120,6 +146,10 @@
                 e.preventDefault();
                 errorBox2.textContent = 'Only alphabets are allowed';
             }
+            else {
+                errorBox2.textContent = '';
+            }
+
 
         })
 
@@ -157,10 +187,17 @@
                 e.preventDefault();
                 errorBox3.textContent = 'Only 1 . is allowed';
             }
+            else {
+                errorBox3.textContent = '';
+            }
+
 
             if (dot === 1 && ((eve >= 48) && (eve <= 57)) && dotAfter >= 2) {
                 e.preventDefault();
                 errorBox3.textContent = 'Only 2 decimals are allowed';
+            }
+            else {
+                errorBox3.textContent = '';
             }
 
             if (dot === 1 && ((eve >= 48) && (eve <= 57)) && dotAfter < 2) {
@@ -171,6 +208,10 @@
                 e.preventDefault();
                 errorBox3.textContent = 'Only numbers are allowed';
             }
+            else {
+                errorBox3.textContent = '';
+            }
+
 
             if (e.key === '.' && dot === 0)
                 dot = 1;
@@ -186,8 +227,14 @@
                 e.preventDefault();
                 errorBox4.textContent = 'Only alphanumerics are allowed';
             }
+            else {
+                errorBox4.textContent = '';
+            }
+
 
         })
+
+
 
 
 

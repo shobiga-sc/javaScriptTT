@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //Inside a Regular Function: 
+        // In a regular function (not an arrow function),
+        //  this refers to the object that is calling the function.
+        function showName() {
+            console.log(this.name);
+        }
+        const person = { name: "John", showName };
+        person.showName();  // Output: "John"
+
+
+
+
+        // Inside a Method of an Object: If a function is 
+        // part of an object (a method), 
+        // this refers to the object that owns the method.
+        const car = {
+            brand: "Toyota",
+            showBrand: function () {
+                console.log(this.brand);
+            }
+        };
+        car.showBrand();  // Output: "Toyota"
+
+
+
+
+        // Inside an Arrow Function: Arrow functions do not have their own this.
+        //  Instead, they inherit this from the surrounding context (lexical scoping).
+        //  This means that this inside an arrow function is the same as this in the surrounding code.
+        const person2 = {
+            name: "Alice",
+            showName: () => {
+                console.log(this.name);  // `this` here does not refer to `person`
+            }
+        };
+        person2.showName();  // Output: undefined (this refers to the global object)
+
+
+
+
+        // No this Binding: As mentioned, arrow functions do not bind their own this.
+        //  Instead, they use the value of this from the surrounding context.
+        //  This makes arrow functions more predictable, especially when they are passed around as callbacks.
+        const person3 = {
+            name: "John",
+            greet: function () {
+                setTimeout(() => {
+                    console.log(`Hello, ${this.name}`);  // Arrow function inherits `this` 
+                    // from the surrounding `greet` method
+                }, 1000);
+            }
+        };
+        person3.greet();  // Output: "Hello, John"
+
+
+
+
+        // No arguments Object: Arrow functions do not have their own arguments object.
+        //  The arguments object is an array-like object provided by regular functions that contains all the 
+        //  arguments passed to the function. Arrow functions can still access the arguments object from the
+        //   enclosing function if needed.
+        function regularFunction() {
+            console.log(arguments);
+        }
+        regularFunction(1, 2, 3);  // Output: [1, 2, 3]
+
+        const arrowFunction = () => {
+            console.log(arguments);  // Error: `arguments` is not defined in an arrow function
+        };
+        arrowFunction(1, 2, 3);
+
+
+        //  Use arrow functions when you need a function that inherits this from the surrounding context
+        //  (e.g., in callbacks or event handlers).
+        // Use regular functions when you need your function to have its own this or need 
+        // access to the arguments object.
+
+
+    </script>
+</body>
+
+</html>
