@@ -1,0 +1,161 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Marks</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.2.1/redux.min.js"></script>
+</head>
+<body>
+    <h1>Student Marks</h1>
+    <ul>
+        <li>Math: <span id="math">0</span></li>
+        <li>Science: <span id="science">0</span></li>
+        <li>English: <span id="english">0</span></li>
+        <li>History: <span id="history">0</span></li>
+        <li>Computer: <span id="computer">0</span></li>
+    </ul>
+    <h2>Total Marks: <span id="total">0</span></h2>
+    <h2>Average Marks: <span id="average">0</span></h2>
+    
+    <button onclick="updateMark('math', 95)">Update Math</button>
+    <button onclick="updateMark('science', 85)">Update Science</button>
+    <button onclick="updateMark('english', 78)">Update English</button>
+    <button onclick="updateMark('history', 88)">Update History</button>
+    <button onclick="updateMark('computer', 92)">Update Computer</button>
+
+    <script>
+       
+        const initialState = {
+            marks: {
+                math: 0,
+                science: 0,
+                english: 0,
+                history: 0,
+                computer: 0
+            },
+            total: 0,
+            average: 0
+        };
+
+       
+        function marksReducer(state = initialState, action) {
+            switch (action.type) {
+                case "UPDATE_MARK":
+                    const newMarks = { ...state.marks, [action.subject]: action.mark };
+                    const total = Object.values(newMarks).reduce((sum, mark) => sum + mark, 0);
+                    const average = total / 5;
+
+                    return { ...state, marks: newMarks, total, average };
+
+                default:
+                    return state;
+            }
+        }
+
+       
+        const store = Redux.createStore(marksReducer);
+
+        
+        function render() {
+            const state = store.getState();
+            document.getElementById("math").innerText = state.marks.math;
+            document.getElementById("science").innerText = state.marks.science;
+            document.getElementById("english").innerText = state.marks.english;
+            document.getElementById("history").innerText = state.marks.history;
+            document.getElementById("computer").innerText = state.marks.computer;
+            document.getElementById("total").innerText = state.total;
+            document.getElementById("average").innerText = state.average.toFixed(2);
+        }
+
+      
+        store.subscribe(render);
+
+       
+        function updateMark(subject, mark) {
+            store.dispatch({ type: "UPDATE_MARK", subject, mark });
+        }
+
+       
+        render();
+    </script>
+</body>
+</html> -->
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Marks</title>
+</head>
+<body>
+    <h1>Student Marks</h1>
+    <ul>
+        <li>Math: <span id="math">0</span></li>
+        <li>Science: <span id="science">0</span></li>
+        <li>English: <span id="english">0</span></li>
+        <li>History: <span id="history">0</span></li>
+        <li>Computer: <span id="computer">0</span></li>
+    </ul>
+    <h2>Total Marks: <span id="total">0</span></h2>
+    <h2>Average Marks: <span id="average">0</span></h2>
+    
+    <button onclick="updateMark('math', 95)">Update Math</button>
+    <button onclick="updateMark('science', 85)">Update Science</button>
+    <button onclick="updateMark('english', 78)">Update English</button>
+    <button onclick="updateMark('history', 88)">Update History</button>
+    <button onclick="updateMark('computer', 92)">Update Computer</button>
+
+    <script>
+        const store = {
+            state: {
+                marks: {
+                    math: 0,
+                    science: 0,
+                    english: 0,
+                    history: 0,
+                    computer: 0
+                },
+                total: 0,
+                average: 0
+            },
+            listeners: [],
+            subscribe(callback) {
+                this.listeners.push(callback);
+            },
+            setState(newState) {
+                this.state = { ...this.state, ...newState };
+                this.listeners.forEach(callback => callback());
+            }
+        };
+
+        function updateMark(subject, mark) {
+            const newMarks = { ...store.state.marks, [subject]: mark };
+            const total = Object.values(newMarks).reduce((sum, mark) => sum + mark, 0);
+            const average = total / 5;
+            
+            store.setState({ marks: newMarks, total, average });
+        }
+
+        function render() {
+            const state = store.state;
+            document.getElementById("math").innerText = state.marks.math;
+            document.getElementById("science").innerText = state.marks.science;
+            document.getElementById("english").innerText = state.marks.english;
+            document.getElementById("history").innerText = state.marks.history;
+            document.getElementById("computer").innerText = state.marks.computer;
+            document.getElementById("total").innerText = state.total;
+            document.getElementById("average").innerText = state.average.toFixed(2);
+        }
+
+        store.subscribe(render);
+        render();
+    </script>
+</body>
+</html>

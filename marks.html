@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Marks</title>
+    <style>
+        button {
+            border: 1px solid rgba(112, 112, 112, 0);
+            background-color: rgb(10, 156, 100);
+            padding: 15px;
+            border-radius: 3px;
+            color: aliceblue;
+            margin: 5px;
+        }
+
+        body {
+            justify-content: center;
+            text-align: center;
+        }
+
+        .store {
+            border: 5px solid rgb(10, 156, 100);
+            padding: 10px 50px;
+            margin: 20px auto;
+            width: 300px;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Student Marks Management</h1>
+
+    <button onclick="subscribe()">Subscribe to View Data</button>
+    <button onclick="unsubscribe()">Unsubscribe to Hide Data</button>
+
+    <div class="store" id="stateDisplay" style="display:none;">
+        <h1>Student Marks</h1>
+        <ul>
+            <li>Math: <span id="math">0</span></li>
+            <li>Science: <span id="science">0</span></li>
+            <li>English: <span id="english">0</span></li>
+            <li>History: <span id="history">0</span></li>
+            <li>Computer: <span id="computer">0</span></li>
+        </ul>
+        <h2>Total Marks: <span id="total">0</span></h2>
+        <h2>Average Marks: <span id="average">0</span></h2>
+        <h3>Marks Scaled to 100: <span id="marksOutOf100">[0, 0, 0, 0, 0]</span></h3>
+        <h3>Marks Scaled to 200: <span id="marksOutOf200">[0, 0, 0, 0, 0]</span></h3>
+        
+    <button onclick="updateMark('math', 95)">Update Math</button>
+    <button onclick="updateMark('science', 85)">Update Science</button>
+    <button onclick="updateMark('english', 78)">Update English</button>
+    <button onclick="updateMark('history', 88)">Update History</button>
+    <button onclick="updateMark('computer', 92)">Update Computer</button>
+
+    </div>
+
+    <script>
+    
+        let store = {
+            state: {
+                marks: {
+                    math: 0,
+                    science: 0,
+                    english: 0,
+                    history: 0,
+                    computer: 0
+                },
+                total: 0,
+                average: 0,
+                marksOutOf100: [0, 0, 0, 0, 0],
+                marksOutOf200: [0, 0, 0, 0, 0]
+            },
+            listeners: [],
+            subscribe: function (callback) {
+                this.listeners.push(callback);
+            },
+            unsubscribe: function (callback) {
+                this.listeners = this.listeners.filter(listener => listener !== callback);
+            },
+            setState: function (newState) {
+                let updatedState = {};
+                for (let key in this.state) {
+                    if (newState[key] !== undefined) {
+                        updatedState[key] = newState[key];
+                    } else {
+                        updatedState[key] = this.state[key];
+                    }
+                }
+                this.state = updatedState;
+                for (let i = 0; i < this.listeners.length; i++) {
+                    this.listeners[i]();
+                }
+            }
+        };
+
+      
+        function render() {
+            let state = store.state;
+            document.getElementById("math").innerText = state.marks.math;
+            document.getElementById("science").innerText = state.marks.science;
+            document.getElementById("english").innerText = state.marks.english;
+            document.getElementById("history").innerText = state.marks.history;
+            document.getElementById("computer").innerText = state.marks.computer;
+
+            document.getElementById("total").innerText = state.total;
+            document.getElementById("average").innerText = state.average.toFixed(2);
+
+            document.getElementById("marksOutOf100").innerText = JSON.stringify(state.marksOutOf100);
+            document.getElementById("marksOutOf200").innerText = JSON.stringify(state.marksOutOf200);
+        }
+
+       
+        function subscribe() {
+            store.subscribe(render);
+            document.getElementById("stateDisplay").style.display = "block"; 
+        }
+
+       
+        function unsubscribe() {
+            store.unsubscribe(render);
+            document.getElementById("stateDisplay").style.display = "none"; 
+        }
+
+        
+        function updateMark(subject, mark) {
+            let newMarks = {
+                math: store.state.marks.math,
+                science: store.state.marks.science,
+                english: store.state.marks.english,
+                history: store.state.marks.history,
+                computer: store.state.marks.computer
+            };
+            if (newMarks[subject] !== undefined) {
+                newMarks[subject] = mark;
+            }
+
+            let total = 0;
+            let subjects = ["math", "science", "english", "history", "computer"];
+            let marksOutOf100 = [];
+            let marksOutOf200 = [];
+
+            for (let i = 0; i < subjects.length; i++) {
+                let subjectMark = newMarks[subjects[i]];
+                total += subjectMark;
+                marksOutOf100.push((subjectMark / 100) * 100);
+                marksOutOf200.push((subjectMark / 100) * 200);
+            }
+
+            let average = total / subjects.length;
+
+            store.setState({
+                marks: newMarks,
+                total: total,
+                average: average,
+                marksOutOf100: marksOutOf100,
+                marksOutOf200: marksOutOf200
+            });
+        }
+
+        render();
+    </script>
+</body>
+
+</html>

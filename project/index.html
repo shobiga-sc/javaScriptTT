@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: #77378a;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        nav a:hover {
+            background-color: #176266;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a.active {
+            background-color: #0a4e4f;
+        }
+
+        #content {
+            padding: 20px;
+            min-height: 500px;
+        }
+
+        
+.update-marks-container {
+    max-width: 500px;
+    margin: 30px auto;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.update-marks-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #343a40;
+}
+
+.update-marks-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #495057;
+}
+
+input {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    width: 40%;
+    margin: 20px;
+    background-color: #fff;
+    transition: border-color 0.3s;
+    margin-right: 100%;
+}
+
+input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.submit-btn {
+    background-color: #77378a;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+.submit-btn:disabled {
+    background-color: #d6d6d6;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .update-marks-container {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .update-marks-form {
+        gap: 10px;
+    }
+
+    .input-container label {
+        font-size: 14px;
+    }
+
+    .input-container input {
+        font-size: 12px;
+    }
+
+    .submit-btn {
+        font-size: 14px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <h1>Student Marks Management</h1>
+    <nav>
+        <a href="javascript:void(0);" data-module="updateMarks">Update Marks</a>
+        <a href="javascript:void(0);" data-module="results">Results</a>
+        <a href="javascript:void(0);" data-module="rank">Check</a>
+    </nav>
+    <div id="content"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Page Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background-color: #1bc4ca;
+            padding: 1rem;
+        }
+        nav a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        nav a:hover {
+            text-decoration: underline;
+            background-color: #176266;
+            padding: 15px;
+        }
+        #app {
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="home" data-link>Home</a>
+        <a href="about" data-link>About</a>
+        <a href="contact" data-link>Contact</a>
+    </nav>
+    <div id="app">Loading...</div>
+
+
+    <script>
+        
+        const routes = {
+            '/home': 'pages/home.js',
+            '/about': 'pages/about.js',
+            '/contact': 'pages/contact.js',
+        };
+
+
+      
+        const navigateTo = url => {
+            history.pushState(null, null, `/${url}`);
+            router();
+        };
+
+
+      
+        const router = async () => {
+            let path = window.location.pathname;
+           
+         
+            if (!routes[path]) {
+                path = '/home';
+                history.replaceState(null, null, path);
+            }
+
+
+            const modulePath = routes[path];
+
+
+            try {
+                const module = await import(`./${modulePath}`);
+                document.getElementById('app').innerHTML = module.default();
+            } catch (error) {
+                console.error('Error loading module:', error);
+                document.getElementById('app').innerHTML = `<h1>Error</h1><p>Failed to load page.</p>`;
+            }
+        };
+
+
+        
+        document.body.addEventListener('click', e => {
+            if (e.target.matches('[data-link]')) {
+                e.preventDefault();
+                navigateTo(e.target.getAttribute('href'));
+            }
+        });
+
+
+        
+        window.addEventListener('popstate', router);
+
+
+       
+        router();
+    </script>
+
+</body>
