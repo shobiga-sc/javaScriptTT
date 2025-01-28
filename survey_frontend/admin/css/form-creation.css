@@ -1,0 +1,153 @@
+/* body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+#app {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+form {
+    margin: 20px 0;
+}
+
+input, select, button {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+} */
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  h1 {
+    color: #333;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .survey-input {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 30px;
+  }
+  
+  .survey-input input,
+  .survey-input textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+  .survey-input textarea {
+    resize: vertical;
+    height: 100px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+  }
+  
+  .add-question-btn {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .add-question-btn:hover {
+    background-color: #45a049;
+  }
+
+ 
+  .save-survey-btn {
+    background-color: #008CBA;
+    color: white;
+  }
+  
+  .save-survey-btn:hover {
+    background-color: #007bb5;
+  }
+  
+  .question-container {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .question-container h3 {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+  }
+  
+  .question-container select,
+  .question-container input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .options-field {
+    margin-top: 15px;
+  }
+  
+  .options-field input[type="text"] {
+    width: 80%;
+    margin-bottom: 10px;
+  }
+  
+  .options-field button {
+    background-color: #f44336;
+    color: white;
+    padding: 6px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .options-field button:hover {
+    background-color: #e53935;
+  }
+  
+  .question-required {
+    margin: 15px 0;
+  }
+  
+  textarea {
+    width: 100%;
+    height: 100px;
+  }
+  
+  @media (max-width: 768px) {
+    body {
+      padding: 10px;
+    }
+  }
+  

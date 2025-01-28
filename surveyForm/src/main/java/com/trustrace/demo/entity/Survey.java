@@ -8,7 +8,16 @@ public class Survey {
     @Id
     private String id;
     private String title;
+    private String description;
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getId() {
         return id;

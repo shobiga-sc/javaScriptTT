@@ -1,0 +1,38 @@
+<p>parent works!</p>
+{{title}}
+<app-child ></app-child>
+
+<app-child [titleForChild]="titleForChild"></app-child>
+
+<div (click)="onParentClick()" style="padding: 20px; background-color: lightblue;">
+     Parent Component
+    <!-- <app-child></app-child> -->
+</div>
+
+<p *ngIf="isValid"> Hello !</p>
+
+<p *ngFor="let arr of arrs">{{ arr }}</p>
+
+
+<button (click) = "changeName()">Click me!</button>
+<br><br>
+<input name="First Name" [(ngModel)]="firstName"/>
+<br><br>
+<span>Value: {{firstName}}</span>
+<br><br>
+<button (click)="isValid= !isValid">Click</button>
+	<br><br>
+	<div [ngClass]="{ 'change-background' : isValid, 
+                          'change-color' : !isValid
+                        }">
+  		div For ngClass Directive
+	</div>
+    <br><br>
+	<div [ngStyle]="{
+        'background':'pink',
+        'color':'black',
+        'border':'1px solid yellow'
+       }"> div For ngStyle Directive
+</div>
+<app-child (childEvent)="receiveMessage($event)"></app-child>
+ <p>Message from Child to Parent: {{ childMessage }}</p>

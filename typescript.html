@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>typescript</title>
+</head>
+
+<body>
+    <p id="para"></p>
+    <script>
+
+        const container = document.createElement("div");
+        const input1 = document.createElement("input");
+        input1.placeholder = "enter";
+        input1.id = "input1";
+     
+        const input2 = document.createElement("input");
+        const input3 = document.createElement("input");
+        const form1 = document.createElement("form");
+        const lable1 = document.createElement("label");
+        lable1.textContent = "input: ";
+        lable1.setAttribute("for", "input1");
+
+        const data = document.createElement("p");
+
+        input1.addEventListener("input", () => {
+            data.textContent = input1.value;
+            input2.value = input1.value;
+            input3.value = input1.value;
+        })
+
+        input2.addEventListener("input", () => {
+            data.textContent = input2.value;
+            input1.value = input2.value;
+            input3.value = input2.value;
+        })
+
+        input3.addEventListener("input", () => {
+            data.textContent = input3.value;
+            input1.value = input3.value;
+            input2.value = input3.value;
+        })
+
+        const bt1 = document.createElement("button");
+        bt1.textContent = "click me";
+
+        bt1.addEventListener("click", () => {
+         container.appendChild(data);
+        data.textContent = "hello";
+        input1.value = data.textContent;
+        input2.value = data.textContent;
+        input3.value = data.textContent;
+        }
+      );
+      const lineBreak = document.createElement("br");
+
+   const link = document.createElement("a");
+
+
+        container.appendChild(bt1);
+       
+        container.appendChild(lable1);
+        container.appendChild(input1);
+     
+        container.appendChild(input2);
+       
+        container.appendChild(input3);
+        document.body.appendChild(container);
+
+        // const obj1 = [
+        //     {
+        //         text: "hello",
+        //         content: 21,
+        //         ref: null,
+        //         bool: true
+        //     },
+        //     {
+        //         text: "how",
+        //         content: 45,
+        //         ref: null,
+        //         bool: false
+        //     }
+        // ]
+
+
+    //     setTimeout(func1, 4000);
+
+    //     function func1(){
+    //         obj1[1].text = obj1[1].text.toUpperCase();
+    //         render();
+    //     }
+
+    //     function render(){
+    //         function change(div1,obj){
+    //             div1.innerHtml = obj;
+    //         }
+    //         obj1.forEach(obj => {
+    //          const div1 = document.createElement("div");
+    //          let count = 0;
+    //             if(obj.ref === null){
+                 
+    //                 div1.textContent = obj;
+    //                 document.getElementById("para").appendChild("div1");
+    //                 document.id = div1;
+    //                 obj.ref =  document.id;
+    //             }
+    //             else{
+    //                 if(obj.bool == true){
+    //                 change(div1,obj);
+    //             }
+    //             }
+
+                
+    //         })
+    //     }
+    //     render();
+
+
+
+    //   const date = new Date();
+    //   consle.log(date);
+
+
+    //     console.log(obj1);
+
+
+
+
+// function func(){
+   
+//     console.log("hi");
+//     func();
+// }
+// func();
+
+// const arr= [];
+
+
+// while(true){
+//  const obj =[{
+//     obj : 200,
+//     yfhjbnklml : 7367872,
+//     njshush : 28892892
+//  },
+//  {
+//     obj : 200,
+//     yfhjbnklml : 7367872,
+//     njshush : 28892892
+//  },
+//  {
+//     obj : 200,
+//     yfhjbnklml : 7367872,
+//     njshush : 28892892
+//  },
+//  {
+//     obj : 200,
+//     yfhjbnklml : 7367872,
+//     njshush : 28892892
+//  },
+//  {
+//     obj : 200,
+//     yfhjbnklml : 7367872,
+//     njshush : 28892892
+//  },
+//  {
+//     obj : 200,
+//     yfhjbnklml : 7367872,
+//     njshush : 28892892
+//  },
+//  {
+//     obj : 200,
+//     yfhjbnklml : 7367872,
+//     njshush : 28892892
+//  },
+//  {
+//     obj : 200,
+//     yfhjbnklml : 7367872,
+//     njshush : 28892892
+//  }
+// ];
+//  arr.push(obj);
+// };
+
+
+
+
+    </script>
+
+</body>
+
+</html>

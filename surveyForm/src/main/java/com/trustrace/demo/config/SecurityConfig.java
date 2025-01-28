@@ -20,7 +20,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())  // Disable CSRF for testing purposes
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/admin/register", "/api/admin/login").permitAll()  // Allow register/login endpoints without authentication
+                        .requestMatchers("/api/user/register", "/api/admin/login", "/api/roles/create", "/api/users/add").permitAll()  // Allow register/login endpoints without authentication
                         .anyRequest().authenticated()  // Require authentication for all other endpoints
                 )
                 .formLogin(login -> login.disable())  // Disable default login page

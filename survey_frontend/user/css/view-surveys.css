@@ -1,0 +1,125 @@
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f7fa;
+  color: #333;
+  display: flex;
+  flex-direction: column; /* Ensure the layout is in a column direction */
+  align-items: center;
+  min-height: 100vh;
+  padding-top: 20px; /* Add some space at the top */
+  align-items: center;
+  text-align: center;
+}
+
+
+.survey-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
+  gap: 20px; /* Space between cards */
+  width: 100%; /* Full width of the container */
+}
+
+.card {
+  padding: 20px;
+  background:  #578dc4;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  justify-content: center;
+   min-height: 200px; 
+}
+.header {
+ 
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  font-size: 2rem;
+  color: #578dc4;
+}
+
+.add-button {
+  background: #578dc4;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.add-button:hover {
+  background: #4578a8;
+}
+
+.sub-header {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  padding: 20px 30px;
+  margin-top: 20px;
+  overflow: hidden; /* Ensures the layout doesn't break due to content overflow */
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Ensure 2 cards per row */
+  gap: 20px; /* Space between cards */
+  width: 100%; /* Make sure the container uses full available space */
+}
+
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+  color: #578dc4;
+}
+
+.card p {
+  font-size: 1rem;
+  color: #555;
+}
+
+
+.survey-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+}
+
+.card .survey-description {
+  font-size: 1rem;
+  color: white;
+  margin-top: 10px;
+}

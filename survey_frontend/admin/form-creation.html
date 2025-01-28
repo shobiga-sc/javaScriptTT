@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Management</title>
+    <link rel="stylesheet" href="./css/form-creation.css">
+</head>
+<body>
+<div id="app">
+    <h1>Create a New Survey</h1>
+    <div class="survey-input">
+        <input type="text" id="surveyName" placeholder="Survey Name" required>
+        <textarea id="surveyDescription" placeholder="Enter the survey description"></textarea>
+    </div>
+    <form id="questionForm">
+        <!-- Dynamic Questions will be added here -->
+    </form>
+    <button class="add-question-btn" onclick="addQuestion()">Add Question</button>
+    <button class="save-survey-btn" onclick="saveSurvey()">Save Survey</button>
+</div>
+<script src="./js/form-creation.js"></script>
+</body>
+</html>
