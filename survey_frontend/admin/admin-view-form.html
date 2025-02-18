@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -12,6 +12,41 @@
     </div>
     <form id="survey-form" class="container"></form>
 
+    <script src="./js/admin-view-form.js"></script>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Survey</title>
+   
+    <link rel="stylesheet" href="./css/admin-view-form.css" />
+  </head>
+  <body>
+    <div class="header">
+      <h1 id="survey-title">Survey Form</h1>
+      <button id="toggle-response-dashboard" class="add-button">See Responses </button>
+    </div>
+    <form id="survey-form" class="container"></form>
+
+    <!-- Toggle Button to Navigate to Response Dashboard -->
+    
+
+    <script>
+      // document.getElementById("toggle-response-dashboard").addEventListener("click", function () {
+      //   window.location.href = "response-new.html";
+      // });
+
+      document.getElementById("toggle-response-dashboard").addEventListener("click", function () {
+  const params = new URLSearchParams(window.location.search);
+  const surveyId = params.get("id");
+  window.location.href = `response-new.html?id=${surveyId}`;
+});
+
+    </script>
     <script src="./js/admin-view-form.js"></script>
   </body>
 </html>

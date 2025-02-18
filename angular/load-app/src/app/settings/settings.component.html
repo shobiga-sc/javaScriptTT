@@ -1,0 +1,27 @@
+
+<h1>Settings work!</h1>
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor esse qui eaque dolore laudantium facilis id nulla dolorem, reprehenderit, necessitatibus a temporibus asperiores magnam vel harum natus quod ipsa eum.</p>
+
+
+<h2>User List</h2>
+<ul>
+  <li *ngFor="let response of responseData">
+    {{ response.name }} - {{ response.email }}
+  </li>
+</ul>
+
+<ul>
+    <li *ngFor="let response of responseData">{{response.email}}</li>
+  </ul>
+
+ 
+  <input name="Name" [(ngModel)]="inputData"/>
+  <!-- <app-life-cycle [inputData]="inputData"></app-life-cycle> -->
+  <app-life-cycle [data]="inputData"></app-life-cycle>
+
+  <button (click)=method()>Click to see what happens!</button>
+
+<!-- <div *ngIf="responseData">
+    <pre>{{ responseData | json }}</pre>
+  </div> -->
+  

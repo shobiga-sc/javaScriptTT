@@ -20,11 +20,16 @@ input, select, button {
 } */
 
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Agu+Display&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+JP:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sen:wght@400..800&family=Silkscreen:wght@400;700&display=swap');
+
+
+ * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family:'Poppins', sans-serif;
+}
+
   
   body {
     font-family: 'Roboto', sans-serif;
@@ -87,6 +92,14 @@ input, select, button {
     background-color: #008CBA;
     color: white;
   }
+  .cancel-survey-btn {
+    background: #cc0044c7;
+    color: white;
+  }
+  
+  .cancel-survey-btn:hover {
+    background:#8f1b485e;
+  }
   
   .save-survey-btn:hover {
     background-color: #007bb5;
@@ -97,6 +110,7 @@ input, select, button {
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 15px;
+    width: 90%;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
   
@@ -107,7 +121,8 @@ input, select, button {
   
   .question-container select,
   .question-container input[type="text"] {
-    width: 100%;
+    min-width: 800px;
+    max-width: 900px;
     padding: 10px;
     margin: 5px 0;
     border-radius: 5px;

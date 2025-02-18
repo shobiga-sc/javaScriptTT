@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="sticky">
+      <h1>Survey Responses</h1>
+      {{surveyId}}
+      <h2 id="survey-title"></h2>
+      <div class="summary">
+        <p>
+          <strong>Total Responses: </strong>
+          <span id="total-responses">0</span>
+        </p>
+        <p>
+          <strong>No Action: </strong>
+          <span id="no-action-responses">0</span>
+        </p>
+        <p>
+          <strong>Accepted: </strong>
+          <span id="accepted-responses">0</span>
+        </p>
+        <p>
+          <strong>Rejected: </strong>
+          <span id="rejected-responses">0</span>
+        </p>
+      </div>
+    </div>
+    <div id="response-container" class="response-container"></div>
+  </div>
+  <button (click)="back()" class="back-btn" id="back-btn">Back</button>
+  

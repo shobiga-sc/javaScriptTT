@@ -1,0 +1,51 @@
+
+<h1>Profile works!</h1>
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor esse qui eaque dolore laudantium facilis id nulla dolorem, reprehenderit, necessitatibus a temporibus asperiores magnam vel harum natus quod ipsa eum.</p>
+{{messageFromSubject}}
+
+<input #dboardInput type="text" placeholder="Enter message">
+<button (click)="sendSubjectMessage(dboardInput.value)">Click</button>
+<br>
+
+<br>
+<label for = "debounce">Debounce data: </label>
+<input id = "debounce" type = "text" [formControl] = "deBounce">
+<button type="button" (click)="updateData()">Update Data</button>
+<p>Debounce Data: {{deBounce.value}}</p>
+
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <label for="first-name">First Name: </label>
+    <input id="first-name" type="text" formControlName="firstName"><br>
+    
+  <div *ngIf="profileForm.controls.firstName.invalid && profileForm.controls.firstName.touched" style="color: red;">
+    Name is required (min 4 characters)
+  </div>
+    <label for="last-name">Last Name: </label>
+    <input id="last-name" type="text" formControlName="lastName"><br> 
+    <div formGroupName = "address">
+        <p>Address</p>
+        <label for="street">Street: </label>
+        <input id="street" type="text" formControlName="street"><br>
+        <label for="city">City: </label>
+        <input id="city" type="text" formControlName="city"><br>
+        <label for="state">State: </label>
+        <input id="state" type="text" formControlName="state"><br>
+        <label for="zip">Zip Code: </label>
+        <input id="zip" type="text" formControlName="zip"><br>
+        <div *ngIf="profileForm.get('address.zip')?.invalid && profileForm.get('address.zip')?.touched" style="color: red;">
+          zip code should be 6 digits
+        </div>
+    </div>
+    <div formArrayName = "aliases">
+        <h2>Aliases</h2>
+        <button type="button" (click)="addAlias()">+ Add another alias</button>
+        <div *ngFor="let alias of aliases.controls; let i=index">
+        
+          <label for="alias">Alias:</label>
+          <input id="alias" type="text" [formControlName]="i">
+        </div>
+      </div>
+    <button type="submit" >Submit</button>
+</form>
+
+<p>Form Status: {{ profileForm.status }}</p>

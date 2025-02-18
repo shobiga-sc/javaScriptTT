@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 export class ParentComponent {
   title:string = 'ParentComponent';
   titleForChild:string = 'ChildComponent';
+  firstName : string = 'Name';
+  text: string = '';
 
   @ViewChild(ChildComponent) childComponent!: ChildComponent;
   onParentClick(): void {
@@ -28,12 +30,12 @@ export class ParentComponent {
   }
 
   isValid : boolean = true;
-
+  
 
   arrs : number[] = [1,2, 3, 4];
 
 
-  firstName : string = 'Name';
+ 
   changeName() : void {
     this.firstName = 'Naming';
   }

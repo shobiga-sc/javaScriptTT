@@ -1,0 +1,130 @@
+array methods (find,map,reduce,filter,find index,slice)->realtime
+string operations(toupper,string split,regulr exp...)
+date methods
+math(floor,ceil,float to int,square)
+control structure(if,else,switch,while,do while,for each)
+
+
+array of obj
+company name,opening time,close time(using date and array function)
+utc time
+
+web API communication with call stack
+
+
+web worker
+for--> in,of
+tempelate literals
+event listner---windows,scroll,keyboard
+
+alert,prompt,confirm
+
+selectors-->name,attribute,input type,
+
+THIS and arrow functions
+callback
+
+garbage collector
+stack memory heap memory--- usage, nature 
+event loop
+call back queue
+call stack
+micro queue
+
+queryselector, querySelectorAll
+
+
+type-text box
+no max,min length
+1. type only name with alpha and space.but no space should be allowed at front and end,max-20char and notification if 20 char exceeds,first letter caps,after space caps---> use keycode
+2.  no other than alpha allowed
+3.  type numbers...after point only 2 digits allowed
+4. numbers,alpha allowed no other special char allowed
+5.only positive numbers should be typed
+prevent default
+
+
+create a plugin 
+object to be displayed as a html
+validations---->(required,num-->only float,zipcode(indian , foreign),email,fax no)
+
+fetch
+
+async,await,
+promise,promiseAll,promise(resolve,reject)
+then,catch
+allsettled
+
+finally,prominseAll
+polyfill--->
+
+javascript reserved words
+generators
+redux,rxjs
+2way binding
+
+
+html 5 routing,modules--->monday
+solid principles
+web server
+angular building blocks --->monday
+
+2 tab communication
+
+typescript
+
+angular:
+
+clicked on parent, child should run and vice versa
+datatypes
+how it works in angular
+how to run in specific port
+lap to phone running with same ip
+
+ng for,if,...
+directives
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+what is heap memory, working
+what is stack, garbage collector
+material error
+custom directive
+service
+2 way binding
+
+
+
+
+window.preformance to get heap size
+color gradient
+routing with lazy loading
+
+system design
+chat ai=>rag
+
+
+dynamic param passing
+wild card routing
+lifecycle hook
+services api call
+rxjs behavior ,subject,utility fuctions,
+debounce---> important both in js and angular(rxjs)
+
+
+
+debounce in rxjs --- 
+same concept as debounce is throttle
+subject and subject behaviour other types
+replaySubject
+asyncsubject
+formControllers
+
+reactive forms with validations
+js-generators video is given ----> realtime eg: amazon infinity scroll
+modules in angular, nested modules
+
+streaming of videos
+utility functions in rxjs
+modules in angular
+
+webpack ---> js uglify online

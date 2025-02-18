@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function* generator1() {
+      yield* generator2();
+      for (let i = 1; i <= 100; i++) {
+        yield i;
+      }
+    }
+
+    function* generator2() {
+
+      for (let i = 200; i <= 202; i++) {
+        console.log(`Value from generator 2 is ${i}`);
+        yield i;
+      }
+    }
+
+    const instance1 = generator1();
+
+    for (let i = 0; i < 5; i++) {
+      console.log(`Value from generator 1 is ${instance1.next().value}`)
+    }
+
+
+    function* greetFunction() {
+      yield "Hi";
+      yield "Hello";
+      yield "bye";
+    }
+    let greet = greetFunction();
+    console.log(greet.next());
+    console.log(greet.next().value);
+    console.log(greet.next());
+    console.log(greet.next());
+    console.log(...greetFunction());
+
+    //custom iterables
+
+    const degrees = {
+      courses: ['Tech', 'sc', 'E'],
+      *[Symbol.iterator]() {
+        for (let course of this.courses) {
+          yield 'B' + course;
+        }
+      }
+    }
+    for (let degree of degrees) {
+      console.log(degree);
+    }
+
+    //infinite generators
+
+    function* generateId() {
+      let id = 200;
+      while (true) {
+        yield id++;
+      }
+    }
+
+    const id = generateId();
+    console.log(id.next().value);
+    console.log(id.next().value);
+    console.log(id.next().value);
+  </script>
+</body>
+
+</html>

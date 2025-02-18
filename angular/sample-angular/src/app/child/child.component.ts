@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter} from '@angular/core';
 
+
 @Component({
   selector: 'app-child',
   standalone: true,
@@ -10,6 +11,8 @@ import { Component, Input, Output, EventEmitter} from '@angular/core';
 export class ChildComponent {
      @Input() titleForChild: string = '';
 
+     @Input() name: string = ""; 
+
      onParentClicked(): void {
       console.log('Child component executed');
     }
@@ -19,5 +22,9 @@ export class ChildComponent {
 
     sendMessage() {
       this.childEvent.emit('Hello, Parent!'); 
+    }
+
+    ngOnChanges(){
+          console.log("value change"); 
     }
 }

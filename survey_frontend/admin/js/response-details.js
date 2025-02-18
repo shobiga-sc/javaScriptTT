@@ -1,8 +1,7 @@
-// Function to fetch survey response details
+
 function fetchSurveyResponse() {
-    // Get survey ID from the URL query parameters
     const urlParams = new URLSearchParams(window.location.search);
-    const surveyId = urlParams.get('id');
+    const surveyId = urlParams.get("id");
 
     if (!surveyId) {
         alert("Survey ID not found!");
@@ -11,10 +10,9 @@ function fetchSurveyResponse() {
 
     fetch(`http://localhost:8080/api/survey-responses/${surveyId}`, {
         method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })
+        headers: { "Content-Type": "application/json" }
+      })
+      
     .then(response => {
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -23,18 +21,18 @@ function fetchSurveyResponse() {
     })
     .then(data => {
         const responseContainer = document.getElementById("response-details");
-        responseContainer.innerHTML = ""; // Clear previous content
+        responseContainer.innerHTML = ""; 
+
+        if (data.responses.length === 0) {
+            responseContainer.innerHTML = "<p>No responses available for this survey.</p>";
+            return;
+        }
 
         data.responses.forEach(item => {
             const card = document.createElement("div");
             card.className = "response-card";
 
-            let answerContent = "";
-            if (Array.isArray(item.answer)) {
-                answerContent = item.answer.join(", ");
-            } else {
-                answerContent = item.answer;
-            }
+            let answerContent = Array.isArray(item.answer) ? item.answer.join(", ") : item.answer;
 
             card.innerHTML = `
                 <h3>${item.placeholder}</h3>
@@ -48,5 +46,4 @@ function fetchSurveyResponse() {
     .catch(error => console.error("Error fetching survey details:", error));
 }
 
-// Load survey responses when the page loads
 document.addEventListener("DOMContentLoaded", fetchSurveyResponse);

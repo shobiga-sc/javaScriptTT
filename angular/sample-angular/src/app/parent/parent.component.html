@@ -16,7 +16,7 @@
 
 <button (click) = "changeName()">Click me!</button>
 <br><br>
-<input name="First Name" [(ngModel)]="firstName"/>
+<input name="Name" [(ngModel)]="firstName"/>
 <br><br>
 <span>Value: {{firstName}}</span>
 <br><br>
@@ -34,5 +34,5 @@
         'border':'1px solid yellow'
        }"> div For ngStyle Directive
 </div>
-<app-child (childEvent)="receiveMessage($event)"></app-child>
+<app-child (childEvent)="receiveMessage($event)" [name]="firstName"> </app-child>
  <p>Message from Child to Parent: {{ childMessage }}</p>

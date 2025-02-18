@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ParentComponent } from './parent/parent.component'; // Correctly imported
 import { CustomDirective } from './custom.directive';
@@ -16,9 +16,14 @@ export class AppComponent {
   title = 'sample-angular';
 
   msg: string = '';
+
+  text: string = '';
+
+
   constructor(private service1Service: Service1Service){
 
   }
+
 
   ngOnInit() {
     this.msg = this.service1Service.getMessage();

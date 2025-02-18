@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="header">
+        <h1>Admin Dashboard</h1>
+        <button class="add-button" routerLink="create-survey"> + Add Survey</button>
+
+    </div>
+    <h2 class="sub-header">List of Surveys</h2>
+    <div class="survey-container" id="survey-container">
+        <div *ngFor="let survey of data" class="card" id="'survey-' + survey.id">
+            <h3 class="survey-name">{{survey.name}}</h3>
+            <p class="survey-description" [routerLink]="['form-preview', survey.id]">{{survey.description}}</p>
+            <div class="footer-div">
+                <button [ngClass]="[
+                  'status-toggle-btn', 
+                   survey.active ? 'active' : 'inactive'
+                ]" (click) = updateStatus(survey.id,!survey.active,survey.name)>
+                  {{ survey.active ? 'Active' : 'Inactive' }}
+                </button>
+                <img class="delete-icon" title="Click to delete Survey" src="dark.png" (click)="deleteSurvey(survey.id, survey.name)">
+              </div>
+              
+        </div>
+    </div>
+
+
+
+</div>
+<button class="back-btn" routerLink="/role">Back</button>

@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">NavApp</a>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+          <!-- <a  class="nav-link" (click)="navigateToDashboard()">Dashboard</a> -->
+         
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/settings" routerLinkActive="active">Settings</a>
+          <!-- <a class="nav-link" (click)="navigateToSettings()">Settings</a> -->
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/profile" routerLinkActive="active">Profile</a>
+          <!-- <a class="nav-link" (click)="navigateToProfile()">Profile</a> -->
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <router-outlet></router-outlet>
+  
