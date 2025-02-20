@@ -1,17 +1,18 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Survey } from '../../models/surveys.model';
-import { SurveyApiService } from '../../survey-api.service'; 
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
+import { Survey } from '../../models/surveys.model'; 
+import { SurveyApiService } from '../../survey-api.service';
+import { ActivatedRoute } from '@angular/router';
+import { RouterLink } from '@angular/router';
 @Component({
-  selector: 'app-admin-form-preview',
+  selector: 'app-respond',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './admin-form-preview.component.html',
-  styleUrl: './admin-form-preview.component.css'
+  templateUrl: './respond.component.html',
+  styleUrl: './respond.component.css'
 })
-export class AdminFormPreviewComponent {
-  surveyId: string = '';
+export class RespondComponent {
+ surveyId: string = '';
   survey: Survey | null = null;
 
 

@@ -1,13 +1,14 @@
+
 <div id="app">
     <div class="header">
         <h1 id="survey-title">{{ survey?.name }}</h1>
 
-        <button id="toggle-response-dashboard" class="add-button" [routerLink]="['responses']">See Responses</button>
+       
     </div>
     <form id="survey-form" class="container">
         <div class="form-field" *ngFor="let question of survey?.questions; let i = index">
             <p class="required" *ngIf="question.required === true">required *</p>
         </div>
     </form>
-    <button class="back-btn" routerLink='/admin'>Back</button>
+    <button class="back-btn" routerLink='/user'>Back</button>
 </div>

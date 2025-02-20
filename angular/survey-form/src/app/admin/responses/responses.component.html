@@ -1,28 +1,51 @@
 <div class="container">
-    <div class="sticky">
-      <h1>Survey Responses</h1>
-      {{surveyId}}
-      <h2 id="survey-title"></h2>
-      <div class="summary">
-        <p>
-          <strong>Total Responses: </strong>
-          <span id="total-responses">0</span>
-        </p>
-        <p>
-          <strong>No Action: </strong>
-          <span id="no-action-responses">0</span>
-        </p>
-        <p>
-          <strong>Accepted: </strong>
-          <span id="accepted-responses">0</span>
-        </p>
-        <p>
-          <strong>Rejected: </strong>
-          <span id="rejected-responses">0</span>
-        </p>
+  <div class="sticky">
+  <h1 class="survey-title">Survey Responses</h1>
+  <h3>Survey Name: <span class="survey-title"> {{surveyTitle}} </span></h3>
+  <div class="summary">
+    <span>Total: {{ totalResponses }}</span>
+    <span>No Action: {{ noActionResponses }}</span>
+    <span>Accepted: {{ acceptedResponses }}</span>
+    <span>Rejected: {{ rejectedResponses }}</span>
+  </div>
+</div>
+  <div class="response-container">
+    
+    <div *ngFor="let response of paginateResponses(); let i = index;" class="response-card"
+    
+       [ngClass]="{
+         'accepted': response.status === 'ACCEPTED', 
+         'rejected': response.status === 'REJECTED', 
+         'no-action': response.status === 'NO_ACTION'
+       }">
+      <h3>Response {{i+1}}</h3>
+      <ul>
+        <li *ngFor="let answer of response.responses">
+          <span class="question-text">{{ answer.questionValue}} :</span>
+          <span class="answer-text">{{ answer.answer}}</span>
+        </li>
+      </ul>
+
+      <div class="toggle-container">
+        <label class="toggle-switch">
+          <input type="checkbox" class="toggle-input" 
+          [checked]="response.status === 'ACCEPTED'"
+          
+          (change)="updateStatusFromEvent($event, response.id)">
+        
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="status-label">{{ response.status }}</span>
       </div>
     </div>
-    <div id="response-container" class="response-container"></div>
   </div>
-  <button (click)="back()" class="back-btn" id="back-btn">Back</button>
-  
+
+  <div class="pages">
+    <button class="prev-button" (click)="prevPage()" [disabled]="currentPage === 1" [ngClass]="{'disabled': currentPage === 1 }">Previous</button>
+    <span>Page {{currentPage}} of {{totalPages}}</span>
+    <button class="next-button" (click)="nextPage()" [disabled]="currentPage >= ceil(responses.length / responsesPerPage)"
+      [ngClass]="{'disabled': currentPage >= ceil(responses.length / responsesPerPage) }">Next</button>
+  </div>
+
+  <button class="back-btn" (click)="back()">Back</button>
+</div>

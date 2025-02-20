@@ -1,11 +1,9 @@
-
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family:'Poppins', sans-serif;
-  }
-  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
   
   
   body {
@@ -23,7 +21,7 @@
    }
   
   .container{
-      margin-left: 70px;
+      margin-left: 80px;
   }
   
   
@@ -142,6 +140,7 @@
     font-size: 1.7rem;
     font-weight: bold;
     color: rgb(0, 0, 0);
+    text-align: center;
   }
   
   .card .survey-description {

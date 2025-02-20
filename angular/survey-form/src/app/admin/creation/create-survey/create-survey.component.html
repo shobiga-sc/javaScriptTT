@@ -1,17 +1,89 @@
-<div id = "app">
-     <h1>Create a New Survey</h1>
-     <div class="survey-input">
-        <input id="survey-name" class="survey-name" placeholder="Survey Name">
-        <div  class="survey-name-validate" id="survey-name-validate">
+<div id="app">
+  <h1>Create a New Survey</h1>
+
+  <form [formGroup]="questionForm" (ngSubmit)="submitForm()" >
+    <div class="survey-input">
+      <input id="survey-name" class="survey-name" placeholder="Survey Name" formControlName="name" />
+      <div class="survey-name-validate" id="survey-name-validate"></div>
+
+      <textarea id="survey-description" class="survey-description" placeholder="Enter the survey description"
+        formControlName="description"></textarea>
+      <div class="survey-description-validate" id="survey-description-validate"></div>
+    </div>
+
+    <div formArrayName="questions">
+      <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i" class="question-container">
+
+
+        <div class="question-header">
+          <h3>Question {{ i + 1 }}</h3>
+          <div (click)="deleteQuestion(i)" id="delete-link" class="delete-link" title="Delete Question">
+            <img src="dark.png" class="delete-icon">
+          </div>
         </div>
-        <textarea id="survey-description" class="survey-description" placeholder="Enter the survey description"></textarea>
-        <div   class="survey-description-validate" id="survey-description-validate">
+
+
+        <label>Question:</label><br>
+        <input type="text" formControlName="questionValue" placeholder="Enter the question" /><br>
+
+
+        <label>Answer Type:</label><br>
+        <select formControlName="type" (change)="updateType(i, $event)">
+
+
+          <option value="RadioButton">Radio Button</option>
+          <option value="MultipleChoice">Multiple Choice</option>
+          <option value="DropDown">Drop Down</option>
+          <option value="Paragraph">Paragraph</option>
+          <option value="FileUpload">File Upload</option>
+          <option value="DateAndTime">Date and Time</option>
+          <option value="Number">Number</option>
+          <option value="Email">Email</option>
+        </select>
+
+
+        <div *ngIf="['RadioButton', 'MultipleChoice', 'DropDown'].includes(question.get('type')?.value)">
+          <label>Options:</label>
+          <div formGroupName="additionalProperties">
+            <div formArrayName="options" class="options-field">
+              <div *ngFor="let option of getOptions(i).controls; let j = index">
+                <p>Option {{ j+1 }}:</p>
+                <input type="text" [formControlName]="j" placeholder="Enter option" /><br>
+                <button type="button" (click)="removeOption(i, j)" title="Remove Option">Remove</button>
+              </div>
+            </div>
+            <button type="button" (click)="addOption(i)" class="add-option-btn">Add Option</button>
+          </div>
         </div>
-     </div>
-     <form id="questionForm"></form>
-     <div class="button-div">
-        <button class="add-question-btn">Add Question</button>
-        <button class="save-survey-btn">Save Survey</button>
-        <button class="cancel-survey-btn" routerLink="/admin">Cancel Survey</button>
-     </div>
+
+          <div *ngIf="['Paragraph','Number'].includes(question.get('type')?.value)" class="length">
+            <label>Min Length: </label>
+            <input type="number" placeholder="Enter length" formControlName="minSize">
+            <label>Max Length: </label>
+            <input type="number" placeholder="Enter length" formControlName="maxSize">
+          </div>
+
+          <div *ngIf="['FileUpload'].includes(question.get('type')?.value)" class="length">
+
+            <label>Max Size: </label>
+            <input type="number" placeholder="Enter Size in MB" formControlName="maxSize">
+          </div>
+         
+
+
+          <label>Required: </label>
+          <input type="radio" formControlName="required" [value]="true" /> Yes
+          <input type="radio" formControlName="required" [value]="false" /> No
+
+        </div>
+      </div>
+
+      <div class="button-div">
+        <button class="add-question-btn" type='button' (click)="addQuestion()">Add Question</button>
+        <button class="save-survey-btn" type="submit">Save Survey</button>
+        <button class="cancel-survey-btn" type='button' (click)="onCancel()">Cancel Survey</button>
+      </div>
+  </form>
+
+  
 </div>

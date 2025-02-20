@@ -23,7 +23,7 @@ h1 {
     justify-content: space-between;
     background: #cc0044c7;
     color: white;
-    padding: 10px;
+    padding: 20px 10px;
     border-radius: 5px;
     margin-bottom: 20px;
     font-size: 18px;
@@ -166,6 +166,14 @@ h1 {
     font-weight: bold;
 }
 
+.response-card ul{
+    list-style-type: disc;
+    margin-left: 20px;
+}
+.question-text{
+    color: black;
+    font-weight: bold;
+}
 .response-card ul li .answer-text {
     display: block;
     margin-left: 15px; 
@@ -198,3 +206,27 @@ h1 {
     font-size:14px; 
     cursor: pointer;
 }
+
+.pages{
+    margin-left: 30%;
+}
+
+.response-card {
+    border: 3px solid #ccc;
+  }
+  
+  .accepted {
+    border-color: rgb(12, 187, 12);
+  }
+  
+  .rejected {
+    border-color: red;
+  }
+  
+  .no-action {
+    border-color: grey;
+  }
+  
+  .disabled{
+    background:#fa7ca6ee;
+  }
