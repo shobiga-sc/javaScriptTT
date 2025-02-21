@@ -34,6 +34,10 @@ export class SurveyApiService {
     return this.http.post<void>(`${this.baseUrl}/api/surveys`, survey);
   }
 
+  getSurveyName(name: string): Observable<Record<string, boolean>>{
+    return this.http.get<Record<string, boolean>>(`${this.baseUrl}/api/surveys/check-name/${name}`);
+  }
+
 
 
 }

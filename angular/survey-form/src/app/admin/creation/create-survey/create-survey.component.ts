@@ -25,8 +25,8 @@ export class CreateSurveyComponent {
 
   ngOnInit() {
     this.questionForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
+      name: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]],
+      description: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(200)]],
       active: [true],
       questions: this.formBuilder.array([])
     });
@@ -39,11 +39,11 @@ export class CreateSurveyComponent {
 
   addQuestion() {
     const questionGroup = this.formBuilder.group({
-      questionValue: ['', Validators.required],
+      questionValue: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(200)]],
       type: ['RadioButton'],
       required: [false],
       additionalProperties: this.formBuilder.group({
-        options: this.formBuilder.array([]) 
+        options: this.formBuilder.array([])
       }),
     });
 
@@ -51,7 +51,7 @@ export class CreateSurveyComponent {
   }
 
   getOptions(index: number): FormArray {
-    const question = this.questions.at(index) as FormGroup; 
+    const question = this.questions.at(index) as FormGroup;
 
     if (!question.get('additionalProperties')) {
       question.setControl(
@@ -60,14 +60,29 @@ export class CreateSurveyComponent {
       );
     }
 
-    return question.get('additionalProperties.options') as FormArray;
+    const optionsArray = question.get('additionalProperties.options') as FormArray;
+
+
+    while (optionsArray.length < 2) {
+      optionsArray.push(new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(200)]));
+    }
+
+    return optionsArray;
+
+
   }
 
-    addOption(index: number) {
-    this.getOptions(index).push(new FormControl(''));
+  addOption(index: number) {
+    this.getOptions(index).push(new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(200)]));
   }
 
   removeOption(questionIndex: number, optionIndex: number) {
+    const optionsArray = this.getOptions(questionIndex);
+
+    if (optionsArray.length <= 2) {
+      Swal.fire("Error", "A question must have at least 2 options!", "error");
+      return;
+    }
     Swal.fire({
       title: "Are you sure?",
       text: `Do you want to delete the Option no: ${optionIndex + 1} for Question: ${questionIndex + 1} ?`,
@@ -95,20 +110,30 @@ export class CreateSurveyComponent {
       if (!question.get('additionalProperties')) {
         question.setControl('additionalProperties', this.formBuilder.group({ options: this.formBuilder.array([]) }));
       }
+
+      const optionsArray = this.getOptions(index);
+
+
+      while (optionsArray.length < 2) {
+        optionsArray.push(new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(200)]));
+      }
+    } else {
+
+      question.removeControl('additionalProperties');
     }
 
-    if(['Paragraph','Number'].includes(selectedType)){
-      if(!question.get('minSize')){
-          question.addControl('minSize', new FormControl(''));
+    if (['Paragraph', 'Number'].includes(selectedType)) {
+      if (!question.get('minSize')) {
+        question.addControl('minSize', new FormControl(''));
       }
-      if(!question.get('maxSize')){
+      if (!question.get('maxSize')) {
         question.addControl('maxSize', new FormControl(''));
       }
-      
+
     }
-    else{
-          question.removeControl('minSize');
-          question.removeControl('maxSize');
+    else {
+      question.removeControl('minSize');
+      question.removeControl('maxSize');
     }
 
     if (selectedType === 'FileUpload') {
@@ -116,11 +141,28 @@ export class CreateSurveyComponent {
         question.addControl('maxSize', new FormControl(''));
       }
     } else {
-      if(!(['Paragraph','Number'].includes(selectedType)))
-              question.removeControl('maxSize'); 
+      if (!(['Paragraph', 'Number'].includes(selectedType)))
+        question.removeControl('maxSize');
     }
 
   }
+
+  validateName(event: Event) {
+    const name = (event.target as HTMLInputElement).value.trim();
+    
+    if (!name) return; 
+  
+    this.surveyApiService.getSurveyName(name).subscribe((data) => {
+      if (data['exists']) {
+        
+        this.questionForm.get('name')?.setErrors({ nameExists: true });
+        
+      } else {
+        this.questionForm.get('name')?.setErrors(null);
+      }
+    });
+  }
+  
 
   deleteQuestion(index: number): void {
     Swal.fire({
@@ -142,21 +184,31 @@ export class CreateSurveyComponent {
   }
 
 
-  
+
   submitForm(): void {
 
-    this.surveyApiService.postSurvey(this.questionForm.value).subscribe(()=>
+    if (this.questionForm.invalid) {
+      this.questionForm.markAllAsTouched();
+      return;
+    }
+
+    if (this.questions.length < 1) {
+      Swal.fire("Error", "A survey must have at least one question!", "error");
+      return;
+    }
+
+    this.surveyApiService.postSurvey(this.questionForm.value).subscribe(() =>
       Swal.fire({
         icon: "success",
         title: "Success!",
         text: "Survey saved successfully!",
         confirmButtonColor: "#3085d6",
         confirmButtonText: "OK"
-    }).then(() => {
-      this.router.navigate(['/admin']);
-    })
+      }).then(() => {
+        this.router.navigate(['/admin']);
+      })
     );
-   
+
   }
 
   onCancel() {

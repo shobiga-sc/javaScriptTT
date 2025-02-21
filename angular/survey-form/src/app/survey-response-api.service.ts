@@ -30,4 +30,9 @@ export class SurveyResponseApiService {
     return this.http.get<Record<string, number>>(`${this.baseUrl}/api/survey-responses/${surveyId}/status-counts`);
   }
 
+  postResponse(response:SurveyResponse): Observable<void>{
+    console.log("Submitting response:", response);
+    return this.http.post<void>(`${this.baseUrl}/api/survey-responses`, response);
+  }
+
 }

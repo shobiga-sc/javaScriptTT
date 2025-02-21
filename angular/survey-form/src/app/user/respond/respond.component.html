@@ -1,14 +1,120 @@
-
 <div id="app">
     <div class="header">
         <h1 id="survey-title">{{ survey?.name }}</h1>
-
-       
     </div>
-    <form id="survey-form" class="container">
-        <div class="form-field" *ngFor="let question of survey?.questions; let i = index">
-            <p class="required" *ngIf="question.required === true">required *</p>
+
+    <form [formGroup]="surveyForm" id="survey-form" class="container">
+        <div formArrayName="responses">
+            <div class="form-field" *ngFor="let question of survey?.questions; let i = index" [formGroupName]="i">
+
+                <p class="required" *ngIf="question.required">required *</p>
+                <h4 class="qnumber">Question no: {{ i + 1 }}</h4>
+
+                <div id="input-wrapper">
+                    <label class="question-label">{{ question.questionValue }}</label>
+
+                    <ng-container [ngSwitch]="question.type">
+
+
+                        <textarea *ngSwitchCase="'Paragraph'" formControlName="answer"
+                            placeholder="Type contents here"></textarea>
+                        <div class="validation-message error"
+                            *ngIf="responses.at(i)?.get('answer')?.errors?.['minlength'] && survey?.questions?.[i]?.minSize">
+                            Minimum {{ survey?.questions?.[i]?.minSize }} characters required.
+                        </div>
+
+                        <div class="validation-message error"
+                            *ngIf="responses.at(i)?.get('answer')?.value && responses.at(i)?.get('answer')?.errors?.['maxlength'] && (survey?.questions?.[i]?.maxSize || 1000)">
+                            Maximum {{ survey?.questions?.[i]?.maxSize || 1000 }} characters allowed.
+                        </div>
+
+
+                        <div *ngSwitchCase="'MultipleChoice'">
+                            <div *ngFor="let option of getOptions(question)">
+                                <label class="option">
+                                    <input type="checkbox" [value]="option" (change)="onCheckboxChange($event, i)">
+                                    {{ option }}
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <div *ngSwitchCase="'RadioButton'">
+                            <div *ngFor="let option of getOptions(question)">
+                                <label class="option">
+                                    <input type="radio" formControlName="answer" [value]="option"> {{ option }}
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <select *ngSwitchCase="'DropDown'" formControlName="answer">
+                            <option value="">Select...</option>
+                            <option *ngFor="let option of getOptions(question)" [value]="option">{{ option }}</option>
+                        </select>
+
+
+                        <input *ngSwitchCase="'FileUpload'" type="file" (change)="onFileUpload($event, i)"
+                        accept="image/png, image/jpeg, image/jpg">
+                      
+                      
+                        <div class="validation-message error"
+                        *ngIf="question.type === 'FileUpload' && responses.at(i).get('answer')?.errors?.['maxSize']">
+                        Maximum file size allowed: {{ survey?.questions?.[i]?.maxSize || 5 }} MB.
+                      </div>
+                      
+                      
+
+
+
+                        <input *ngSwitchCase="'DateAndTime'" type="datetime-local" formControlName="answer">
+
+                        <input *ngSwitchCase="'Number'" type="number" formControlName="answer"
+                        placeholder="Enter digits here">
+                      
+                   
+                        <div class="error" 
+                        *ngIf="responses.at(i)?.get('answer')?.value && responses.at(i)?.get('answer')?.errors?.['min']">
+                     Minimum value should be {{ survey?.questions?.[i]?.minSize ?? 0 }}.
+                   </div>
+                   
+                   <div class="error" 
+                        *ngIf="responses.at(i)?.get('answer')?.value && responses.at(i)?.get('answer')?.errors?.['max']">
+                     Maximum value should be {{ survey?.questions?.[i]?.maxSize ?? 1000000 }}.
+                   </div>
+                   
+                          
+                      
+                          
+                       
+
+                     
+
+
+
+                        <input *ngSwitchCase="'Email'" type="email" formControlName="answer"
+                            placeholder="example@domain.com">
+                        <div class="validation-message error" *ngIf="responses.at(i)?.get('answer')?.errors?.['email']">
+                            Please enter a valid email address.
+                        </div>
+
+
+                    </ng-container>
+
+                    <div class="validation-message error"
+                    *ngIf="question.required && responses.at(i)?.get('answer')?.errors?.['required']">
+                    Value is required.
+                </div>
+                
+
+                </div>
+            </div>
         </div>
+
+
+        <button class="cancel-button" type="button" (click)="cancelResponse()">Cancel</button>
+        <button class="submit-button" type="submit" [disabled]="surveyForm.invalid" (click)="onSubmit()">Submit</button>
     </form>
-    <button class="back-btn" routerLink='/user'>Back</button>
+
+
 </div>

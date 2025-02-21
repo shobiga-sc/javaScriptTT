@@ -237,6 +237,11 @@ select{
   justify-content: space-between;
 }
 
+.error{
+  color: red;
+  margin-bottom: 10px;
+}
+
 
   @media (max-width: 768px) {
     body {

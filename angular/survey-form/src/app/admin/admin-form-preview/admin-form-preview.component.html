@@ -5,9 +5,71 @@
         <button id="toggle-response-dashboard" class="add-button" [routerLink]="['responses']">See Responses</button>
     </div>
     <form id="survey-form" class="container">
-        <div class="form-field" *ngFor="let question of survey?.questions; let i = index">
-            <p class="required" *ngIf="question.required === true">required *</p>
+        <div>
+            <div class="form-field" *ngFor="let question of survey?.questions; let i = index" >
+
+                <p class="required" *ngIf="question.required">required *</p>
+                <h4 class="qnumber">Question no: {{ i + 1 }}</h4>
+
+                <div id="input-wrapper">
+                    <label class="question-label">{{ question.questionValue }}</label>
+
+                    <ng-container [ngSwitch]="question.type">
+
+                      
+                        <textarea *ngSwitchCase="'Paragraph'" 
+                            placeholder="Type contents here"></textarea>
+
+                     
+                        <div *ngSwitchCase="'MultipleChoice'">
+                            <div *ngFor="let option of getOptions(question)">
+                                <label class="option">
+                                    <input type="checkbox" > 
+                                    {{ option }}
+                                </label>
+                            </div>
+                        </div>
+
+                       
+                        <div *ngSwitchCase="'RadioButton'">
+                            <div *ngFor="let option of getOptions(question)">
+                                <label class="option">
+                                    <input type="radio"> {{ option }}
+                                </label>
+                            </div>
+                        </div>
+
+                       
+                        <select *ngSwitchCase="'DropDown'" >
+                            <option value="">Select...</option>
+                            <option *ngFor="let option of getOptions(question)" >{{ option }}</option>
+                        </select>
+
+                       
+                        <input 
+                            *ngSwitchCase="'FileUpload'" 
+                            type="file" >
+                        
+                       
+                        <input *ngSwitchCase="'DateAndTime'" type="datetime-local" >
+
+                        <input *ngSwitchCase="'Number'" type="number" 
+                            placeholder="Enter digits here">
+
+                     
+                        <input *ngSwitchCase="'Email'" type="email" 
+                            placeholder="example@domain.com">
+
+                    </ng-container>
+
+                    
+                </div>
+            </div>
         </div>
+
+     
+       
     </form>
+
     <button class="back-btn" routerLink='/admin'>Back</button>
 </div>
